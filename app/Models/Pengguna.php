@@ -1,6 +1,6 @@
 <?php
  
-namespace App;
+namespace App\Models\Pengguna;
  
 use Illuminate\Database\Eloquent\Model;
  
@@ -10,7 +10,7 @@ class Pengguna extends Model
  
     public function telepon()
     {
-    	return $this->hasOne('App\Telepon');
+    	return $this->hasOne('Telepon::class');
     }
     
 }
