@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
  
 use Illuminate\Http\Request;
  
+ 
 // memanggil model Pengguna
-use App\Pengguna;
+use App\Models\Pengguna;
  
 class PenggunaController extends Controller
 {
