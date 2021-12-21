@@ -21,7 +21,7 @@
 					<tbody>
 						@foreach($pengguna as $p)
 						<tr>
-							<td>{{ $p->nama }}</td>
+							<td>{{ $p->name }}</td>
 							<td>{{ $p->telepon->nomor_telepon }}</td>
 						</tr>
 						@endforeach
