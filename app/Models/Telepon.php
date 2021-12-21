@@ -1,6 +1,6 @@
 <?php
  
-namespace App\Models;
+namespace App;
  
 use Illuminate\Database\Eloquent\Model;
  
@@ -10,6 +10,6 @@ class Telepon extends Model
  
     public function pengguna()
     {
-    	return $this->belongsTo(Pengguna::class);
+    	return $this->belongsTo('App\Pengguna');
     }
 }
