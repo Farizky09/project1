@@ -17,3 +17,4 @@ use App\Models\Telepon;
 
 Route::get('/pengguna' , 'PenggunaController@index');
 Route::get('/article', 'WebController@index');
+Route::get('/anggota', 'DikiController@index');
