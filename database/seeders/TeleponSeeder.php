@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-
+use Faker\Factory as Faker;
 class TeleponSeeder extends Seeder
 {
     /**
@@ -13,10 +13,13 @@ class TeleponSeeder extends Seeder
      */
     public function run()
     {
-    
-            DB::table('pengguna')->insert([
-                'nomor_telepon'  => '081234566'
-                'pengguna_id' => '1'
+        $faker = Faker::create('id_ID');
+
+        for($i = 1; $i <= 50; $i++){
+            DB::table('telepon')->insert([
+                'nomor_telepon'  =>$faker->nomor_telepon
+                'pengguna_id' => $faker->pengguna_id
             ]);
     }
+}
 }
