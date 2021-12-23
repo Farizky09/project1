@@ -17,10 +17,10 @@ class PenggunaSeeder extends Seeder
     {
         $faker = Faker::create('id_ID');
 
-        for($i = 1; $i <= 50; $i++){
-        DB::table('pengguna')->insert([
-            'name'  => $faker->name
-        ]);
+        for ($i = 1; $i <= 50; $i++) {
+            DB::table('pengguna')->insert([
+                'name'  => $faker->name
+            ]);
+        }
     }
-}
 }
