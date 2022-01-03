@@ -15,7 +15,7 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
-                        <a href="{{ route('blog.create') }}" class="btn btn-md btn-success mb-3">TAMBAH POST</a>
+                        <a href="{{ route('post.create') }}" class="btn btn-md btn-success mb-3">TAMBAH POST</a>
                         <table class="table table-bordered">
                             <thead>
                               <tr>
@@ -26,16 +26,16 @@
                               </tr>
                             </thead>
                             <tbody>
-                              @forelse ($posts as $p)
+                              @forelse ($post as $p)
                                 <tr>
                                     <td class="text-center">
-                                        <img src="{{ Storage::url('public/blogs/').$p->judul }}" class="rounded" style="width: 150px">
+                                        <img src="{{ Storage::url('public/post/').$p->gambar }}" class="rounded" style="width: 150px">
                                     </td>
                                     <td>{{ $p->isi }}</td>
                                     <td>{!! $p->slug!!}</td>
                                     <td class="text-center">
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('blog.destroy', $p->id) }}" method="POST">
-                                            <a href="{{ route('blog.edit', $p->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('post.destroy', $p->id) }}" method="POST">
+                                            <a href="{{ route('post.edit', $p->id) }}" class="btn btn-sm btn-primary">EDIT</a>
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
@@ -49,7 +49,7 @@
                               @endforelse
                             </tbody>
                           </table>  
-                          {{ $blogs->links() }}
+                          {{ $post->links() }}
                     </div>
                 </div>
             </div>

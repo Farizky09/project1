@@ -19,6 +19,6 @@ Route::get('/pengguna' , 'PenggunaController@index');
 Route::get('/article', 'WebController@index');
 Route::get('/anggota', 'DikiController@index');
 Route::get('/article/show', 'WebController@show');
-Route::get('/post','PostController@index');
-Route::post('/post/insert/',[PostController::class,'insert'])->name('insertPost');
+// Route::get('/post','PostController@index');
+// Route::post('/post/insert/',[PostController::class,'insert'])->name('insertPost');
 Route::resource('post', PostController::class);

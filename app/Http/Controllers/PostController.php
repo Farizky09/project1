@@ -22,19 +22,19 @@ public function store(Request $request)
     $this->validate($request, [
         'judul'     => 'required',
         'isi'     => 'required',
-        'slug'     => 'required',
+        'slug'     => 'nullable',
         'gambar'     => 'required|image|mimes:png,jpg,jpeg',
       
     ]);
 
     //upload image
-    $image = $request->file('image');
+    $image = $request->file('gambar');
     $image->storeAs('public/post', $image->hashName());
 
     $post = Post::create([
         'judul'     => $request->judul,
         'isi'     => $request->isi,
-        'slug'     => $request->slug,
+        'slug'     => '',
         'gambar'     => $image->hashName(),
        
     ]);
@@ -56,7 +56,7 @@ public function update(Request $request, post $post)
     $this->validate($request, [
         'judul'     => 'required',
         'isi'     => 'required',
-        'slug'     => 'required',
+        'slug'     => 'nullable',
     ]);
 
     //get data post by ID
@@ -67,7 +67,7 @@ public function update(Request $request, post $post)
         $post->update([
             'judul'     => $request->judul,
         'isi'     => $request->isi,
-        'slug'     => $request->slug,
+        'slug'     => '-',
         ]);
 
     } else {
@@ -82,7 +82,7 @@ public function update(Request $request, post $post)
         $post->update([
             'judul'     => $request->judul,
             'isi'     => $request->isi,
-            'slug'     => $request->slug,
+            'slug'     => '-',
             'gambar'     => $image->hashName(),
            
         ]);
