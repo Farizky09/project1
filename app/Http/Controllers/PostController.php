@@ -47,4 +47,70 @@ public function store(Request $request)
         return redirect()->route('post.index')->with(['error' => 'Data Gagal Disimpan!']);
     }
 }
+public function edit(Post $post)
+{
+    return view('post.edit', compact('post'));
+}
+public function update(Request $request, post $post)
+{
+    $this->validate($request, [
+        'judul'     => 'required',
+        'isi'     => 'required',
+        'slug'     => 'required',
+    ]);
+
+    //get data post by ID
+    $post = post::findOrFail($post->id);
+
+    if($request->file('image') == "") {
+
+        $post->update([
+            'judul'     => $request->judul,
+        'isi'     => $request->isi,
+        'slug'     => $request->slug,
+        ]);
+
+    } else {
+
+        //hapus old image
+        Storage::disk('local')->delete('public/post/'.$post->image);
+
+        //upload new image
+        $image = $request->file('image');
+        $image->storeAs('public/post', $image->hashName());
+
+        $post->update([
+            'judul'     => $request->judul,
+            'isi'     => $request->isi,
+            'slug'     => $request->slug,
+            'gambar'     => $image->hashName(),
+           
+        ]);
+
+    }
+
+    if($post){
+        //redirect dengan pesan sukses
+        return redirect()->route('post.index')->with(['success' => 'Data Berhasil Diupdate!']);
+    }else{
+        //redirect dengan pesan error
+        return redirect()->route('post.index')->with(['error' => 'Data Gagal Diupdate!']);
+    }
+}
+
+
+public function destroy($id)
+{
+  $post = Post::findOrFail($id);
+  Storage::disk('local')->delete('public/post/'.$post->image);
+  $post->delete();
+
+  if($post){
+     //redirect dengan pesan sukses
+     return redirect()->route('post.index')->with(['success' => 'Data Berhasil Dihapus!']);
+  }else{
+    //redirect dengan pesan error
+    return redirect()->route('post.index')->with(['error' => 'Data Gagal Dihapus!']);
+  }
+}
 }
