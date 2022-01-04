@@ -69,7 +69,7 @@ public function update(Request $request, post $post)
         $post->update([
             'judul'     => $request->judul,
         'isi'     => $request->isi,
-        'slug'     => Str::slug($request->title),
+        'slug'     => Str::slug($request->judul),
         ]);
 
     } else {
