@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tambah Data Blog - SantriKoding.com</title>
+    <title>Tambah Data Post - SantriKoding.com</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body style="background: lightgray">
@@ -18,24 +18,13 @@
                         
                             @csrf
 
-                            <div class="form-group">
-                                <label class="font-weight-bold">GAMBAR</label>
-                                <input type="file" class="form-control @error('gambar') is-invalid @enderror" name="gambar">
-                            
-                                <!-- error message untuk title -->
-                                @error('gambar')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
 
                             <div class="form-group">
                                 <label class="font-weight-bold">JUDUL</label>
-                                <input type="text" class="form-control @error('judul') is-invalid @enderror" name="judul" value="{{ old('judul') }}" placeholder="Masukkan Judul Blog">
+                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" placeholder="Masukkan Judul Post">
                             
                                 <!-- error message untuk title -->
-                                @error('judul')
+                                @error('title')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -43,11 +32,23 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="font-weight-bold">KONTEN</label>
-                                <textarea class="form-control @error('isi') is-invalid @enderror" name="isi" rows="5" placeholder="Masukkan Konten Blog">{{ old('isi') }}</textarea>
+                                <label class="font-weight-bold">ISI</label>
+                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" rows="5" placeholder="Masukkan Isi Post">{{ old('content') }}</textarea>
                             
-                                <!-- error message untuk isi -->
-                                @error('isi')
+                                <!-- error message untuk content -->
+                                @error('content')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="font-weight-bold">GAMBAR</label>
+                                <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
+                            
+                                <!-- error message untuk title -->
+                                @error('image')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -26,6 +27,7 @@ public function store(Request $request)
         'gambar'     => 'required|image|mimes:png,jpg,jpeg',
       
     ]);
+  
 
     //upload image
     $image = $request->file('gambar');
@@ -34,7 +36,7 @@ public function store(Request $request)
     $post = Post::create([
         'judul'     => $request->judul,
         'isi'     => $request->isi,
-        'slug'     => '',
+        'slug'     => Str::slug($request->judul),
         'gambar'     => $image->hashName(),
        
     ]);
@@ -67,7 +69,7 @@ public function update(Request $request, post $post)
         $post->update([
             'judul'     => $request->judul,
         'isi'     => $request->isi,
-        'slug'     => '-',
+        'slug'     => Str::slug($request->title),
         ]);
 
     } else {
@@ -82,7 +84,7 @@ public function update(Request $request, post $post)
         $post->update([
             'judul'     => $request->judul,
             'isi'     => $request->isi,
-            'slug'     => '-',
+            'slug'     => Str::slug($request->judul),
             'gambar'     => $image->hashName(),
            
         ]);
