@@ -23,6 +23,7 @@
                                 <th scope="col">ISI</th>
                                 <th scope="col">SLUG</th>
                                 <th scope="col">GAMBAR</th>
+                                <th scope="col">AKSI</th>
                               </tr>
                             </thead>
                             <tbody>
