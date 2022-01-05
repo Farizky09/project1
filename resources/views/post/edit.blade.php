@@ -19,16 +19,6 @@
                             @method('PUT')
 
                             <div class="form-group">
-                                <label class="font-weight-bold">GAMBAR</label>
-                                <input type="file" class="form-control" name="gambar">
-                                <img src="{{ Storage::url('public/post/').$post->gambar }}" class="rounded" style="width: 150px">
-                            </div>
-                            @error('gambar')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            <div class="form-group">
                                 <label class="font-weight-bold">JUDUL</label>
                                 <input type="text" class="form-control @error('judul') is-invalid @enderror" name="judul" value="{{ old('judul', $post->judul) }}" placeholder="Masukkan Judul post">
                             
@@ -41,7 +31,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="font-weight-bold">KONTEN</label>
+                                <label class="font-weight-bold">ISI</label>
                                 <textarea class="form-control @error('isi') is-invalid @enderror" name="isi" rows="5" placeholder="Masukkan Konten post">{{ old('isi', $post->isi) }}</textarea>
                             
                                 <!-- error message untuk isi -->
@@ -52,6 +42,17 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label class="font-weight-bold">GAMBAR</label>
+                                <input type="file" class="form-control" name="gambar">
+                                <img src="{{ Storage::url('public/post/').$post->gambar }}" class="rounded" style="width: 150px">
+                            </div>
+                            @error('gambar')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            
                             <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
                             <button type="reset" class="btn btn-md btn-warning">RESET</button>
 

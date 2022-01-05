@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Data Blogs - SantriKoding.com</title>
+    <title>Data Post | project1</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
@@ -28,12 +28,13 @@
                             </thead>
                             <tbody>
                               @forelse ($post as $p)
-                                <tr>
+                                <tr><td>{{ $p->judul }}</td>
+                                    
+                                    <td>{{ $p->isi }}</td>
+                                    <td>{!! $p->slug!!}</td></br>
                                     <td class="text-center">
                                         <img src="{{ Storage::url('public/post/').$p->gambar }}" class="rounded" style="width: 150px">
                                     </td>
-                                    <td>{{ $p->isi }}</td>
-                                    <td>{!! $p->slug!!}</td>
                                     <td class="text-center">
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('post.destroy', $p->id) }}" method="POST">
                                             <a href="{{ route('post.edit', $p->id) }}" class="btn btn-sm btn-primary">EDIT</a>
@@ -43,11 +44,13 @@
                                         </form>
                                     </td>
                                 </tr>
+                                
                               @empty
                                   <div class="alert alert-danger">
                                       Data Post belum Tersedia.
                                   </div>
                               @endforelse
+                              
                             </tbody>
                           </table>  
                           {{ $post->links() }}
