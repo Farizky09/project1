@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use App\Models\Pengguna;
 use App\Models\Telepon;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +25,19 @@ Route::get('/anggota', 'DikiController@index');
 Route::get('/article/show', 'WebController@show');
 // Route::get('/post','PostController@index');
 // Route::post('/post/insert/',[PostController::class,'insert'])->name('insertPost');
-Route::resource('post', PostController::class);
+Route::resource('post', PostController::class)->middleware('auth');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::middleware(['auth'::class])->group(function () {
+    Route::resource('post', PostController::class) {
+   
+        
+
+    Route::get('/post', function () {
+        //
+    })->withoutMiddleware(['auth'::class]);
+});
