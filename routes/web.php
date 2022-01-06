@@ -33,7 +33,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::middleware(['auth'::class])->group(function () {
-    Route::resource('post', PostController::class) {
+    Route::resource('post', PostController::class); 
    
         
 
