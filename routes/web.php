@@ -19,13 +19,15 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('/' , function(){
+    return redirect('login');
+});
 Route::get('/pengguna' , 'PenggunaController@index');
 Route::get('/article', 'WebController@index');
 Route::get('/anggota', 'DikiController@index');
 Route::get('/article/show', 'WebController@show');
 // Route::get('/post','PostController@index');
 // Route::post('/post/insert/',[PostController::class,'insert'])->name('insertPost');
-Route::resource('post', PostController::class)->middleware('auth');
 
 Auth::routes();
 
@@ -34,10 +36,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth'::class])->group(function () {
     Route::resource('post', PostController::class); 
-   
-        
-
-    Route::get('/post', function () {
-        //
-    })->withoutMiddleware(['auth'::class]);
 });
