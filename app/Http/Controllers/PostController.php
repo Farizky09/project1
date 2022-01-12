@@ -6,12 +6,13 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
+use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
     public function index()
     {
-        $post = Post::latest()->paginate(10);
+        $user_id = Auth::id();
+        $post = Post::where('user_id','=',$id)->paginate(10);
         return view('post.index', compact('post'));
     }
     public function create()
