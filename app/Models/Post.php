@@ -10,6 +10,6 @@ class Post extends Model
     protected $table = 'post';
     use HasFactory;
     protected $fillable = [
-        'judul', 'isi', 'slug','gambar'
+       'user_id','judul', 'isi', 'slug','gambar'
     ];
 }
