@@ -12,7 +12,7 @@ class PostController extends Controller
     public function index()
     {
         $user_id = Auth::id();
-        $post = Post::where('user_id','=',$id)->paginate(10);
+        $post = Post::where('user_id','=',$user_id)->paginate(10);
         return view('post.index', compact('post'));
     }
     public function create()
