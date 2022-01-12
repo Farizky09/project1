@@ -21,7 +21,8 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">JUDUL</label>
-                                <input type="text" class="form-control @error('judul') is-invalid @enderror" name="judul" value="{{ old('judul') }}" placeholder="Masukkan Judul Post">
+                                <input type="text" class="form-control @error('judul') is-invalid @enderror" name="judul" value="{{ old('judul') }}" 
+                                placeholder="Masukkan Judul Post">
                             
                                 <!-- error message untuk judul -->
                                 @error('judul')
@@ -33,7 +34,8 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">ISI</label>
-                                <textarea class="form-control @error('isi') is-invalid @enderror" name="isi" rows="5" placeholder="Masukkan Isi Post">{{ old('isi') }}</textarea>
+                                <textarea class="form-control @error('isi') is-invalid @enderror" name="isi" rows="5" 
+                                placeholder="Masukkan Isi Post">{{ old('isi') }}</textarea>
                             
                                 <!-- error message untuk isi -->
                                 @error('isi')
