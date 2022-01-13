@@ -37,6 +37,7 @@ class PostController extends Controller
         $post = Post::create([ //nyimpen data tampil post
             'judul'     => $request->judul,
             'isi'     => $request->isi,
+            'user_id' => Auth::id(),
             'slug'     => Str::slug($request->judul),
             'gambar'     => $image->hashName(),
 
