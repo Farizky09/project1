@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+
 class PostController extends Controller
 {
     public function index()
     {
+        $post = Post::latest()->paginate(10);
         $user_id = Auth::id();
         $post = Post::where('user_id','=',$user_id)->paginate(10);
         return view('post.index', compact('post'));
@@ -37,6 +39,7 @@ class PostController extends Controller
         $post = Post::create([ //nyimpen data tampil post
             'judul'     => $request->judul,
             'isi'     => $request->isi,
+            'user_id' => Auth::id(),
             'slug'     => Str::slug($request->judul),
             'gambar'     => $image->hashName(),
 
@@ -114,4 +117,5 @@ class PostController extends Controller
             return redirect()->route('post.index')->with(['error' => 'Data Gagal Dihapus!']);
         }
     }
+  
 }
