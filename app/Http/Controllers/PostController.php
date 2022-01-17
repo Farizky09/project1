@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use DataTables;
 
 class PostController extends Controller
 {
@@ -118,10 +117,5 @@ class PostController extends Controller
             return redirect()->route('post.index')->with(['error' => 'Data Gagal Dihapus!']);
         }
     }
-  public function Postlist()
-  {
-      $list = Post::all();
-      return DataTables::of($list)
-      ->make(true);
-  }
+  
 }
