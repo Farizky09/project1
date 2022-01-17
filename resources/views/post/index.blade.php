@@ -28,38 +28,13 @@
                             </thead>
                             <tbody>
                               @forelse ($post as $p)
-                              
-                              <div class="modal fade" id="edit{{$p->id}}">
-                                <div class="modal-dialog">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                  <h4 class="modal-title">Default Modal</h4>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                  <div class="modal-body">
-                                    <form action="{{ route('post.create', $p->id) }}" method="post">
-                                      {{ csrf_field() }}
-                                      <div class="form-group">
-                                        <label for="title" class="col-form-label">JUDUL</label>
-                                        <input type="text" class="form-control" name="title" id="title" value="{{$p->judul}}">
-                                      </div>
-                                      <div class="form-group">
-                                        <label>ISI</label>
-                                        <textarea name="body" class="form-control" rows="3">{{ $p->isi}}</textarea>
-                                      </div>
-                                    </div>
-                               
-                                  <div>
-                                  <td>{!! $p->slug!!}</td></br>
-                                  </div>
-                                  <div class="form-group">
+                                <tr><td>{{ $p->judul }}</td>
+                                    
+                                    <td>{{ $p->isi }}</td>
+                                    <td>{!! $p->slug!!}</td></br>
                                     <td class="text-center">
-                                       
                                         <img src="{{ Storage::url('public/post/').$p->gambar }}" class="rounded" style="width: 150px">
                                     </td>
-                                  </div>
-                                    <div class="form-group">
                                     <td class="text-center">
                                         <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('post.destroy', $p->id) }}" method="POST">
                                             <a href="{{ route('post.edit', $p->id) }}" class="btn btn-sm btn-primary">EDIT</a>
@@ -67,17 +42,9 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
                                         </form>
-                                        </td>
-                                    </tr>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                                 
-                                       
-                                      
-                                   
-                                    
+                                    </td>
+                                </tr>
+                                
                               @empty
                                   <div class="alert alert-danger">
                                       Data Post belum Tersedia.
@@ -92,8 +59,7 @@
             </div>
         </div>
     </div>
-
-
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
