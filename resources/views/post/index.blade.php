@@ -41,12 +41,12 @@
                                     <form action="{{ route('post.create', $p->id) }}" method="post">
                                       {{ csrf_field() }}
                                       <div class="form-group">
-                                        <label for="judul" class="col-form-label">JUDUL</label>
-                                        <input type="text" class="form-control" name="judul" id="judul" value="{{$p->judul}}">
+                                        <label for="title" class="col-form-label">JUDUL</label>
+                                        <input type="text" class="form-control" name="title" id="title" value="{{$p->judul}}">
                                       </div>
                                       <div class="form-group">
                                         <label>ISI</label>
-                                        <textarea name="isi" class="form-control" rows="3">{{ $p->isi}}</textarea>
+                                        <textarea name="body" class="form-control" rows="3">{{ $p->isi}}</textarea>
                                       </div>
                                     </div>
                                
