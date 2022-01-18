@@ -15,36 +15,39 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
+                        <table class="table table-hover table-condensed">
                         <a href="{{ route('post.create') }}" class="btn btn-md btn-success mb-3">TAMBAH POST</a>
-                        <table class="table table-bordered">
+                        <table id="datatable-post" class="table table-bordered">
                             <thead>
-                              <tr>
-                                <th scope="col">JUDUL</th>
-                                <th scope="col">ISI</th>
-                                <th scope="col">SLUG</th>
-                                <th scope="col">GAMBAR</th>
-                                <th scope="col">AKSI</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              @forelse ($post as $p)
-                                <tr><td>{{ $p->judul }}</td>
-                                    
-                                    <td>{{ $p->isi }}</td>
-                                    <td>{!! $p->slug!!}</td></br>
-                                    <td class="text-center">
-                                        <img src="{{ Storage::url('public/post/').$p->gambar }}" class="rounded" style="width: 150px">
-                                    </td>
-                                    <td class="text-center">
-                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('post.destroy', $p->id) }}" method="POST">
-                                            <a href="{{ route('post.edit', $p->id) }}" class="btn btn-sm btn-primary">EDIT</a>
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-                                        </form>
-                                    </td>
+                                <tr>
+                                  <th scope="col">JUDUL</th>
+                                  <th scope="col">ISI</th>
+                                  <th scope="col">SLUG</th>
+                                  <th scope="col">GAMBAR</th>
+                                  <th scope="col">AKSI</th>
                                 </tr>
-                                
+                              </thead>
+                              <tbody></tbody>
+                              
+                          
+                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('post.destroy', $p->id) }}" method="POST">
+                        <a href="{{ route('post.edit', $p->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                    </form>
+                               
+                              
+                                       
+                                      
+                                   
+                                    
                               @empty
                                   <div class="alert alert-danger">
                                       Data Post belum Tersedia.
@@ -57,24 +60,47 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            @endsection
+                       
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-    <script>
+            @section('javascript')
+            <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+            <script>
         //message with toastr
+       
         @if(session()->has('success'))
+       
         
             toastr.success('{{ session('success') }}', 'BERHASIL!'); 
 
         @elseif(session()->has('error'))
 
             toastr.error('{{ session('error') }}', 'GAGAL!'); 
-            
-        @endif
+            ('#post-table').DataTable().ajax.reload(null, false);
+
+   @endif
+        //
+        //GET ALL COUNTRIES
+        window.onload = function() {
+    $('#datatable-post').DataTable({
+            "processing":true,
+            "serverSide": true,
+            "ajax":"{{ route('post.create') }}",
+            "pageLength":5,
+            "aLengthMenu":[[5,10,25,50,-1],[5,10,25,50,"All"]],
+            columns:[
+                {data:"id",},
+                {data:"judul"},
+                {data:"isi"},
+                {data:"gambar"},              
+            ]
+        });
+        function deleteData(id) {
+            $('#delete_data').attr('action', '/backoffice/example/' + id);
+            if (confirm('apakah anda yakin akan menghapus ini ?')) {
+                $('#delete_data').submit();
+    
     </script>
 
 </body>
