@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\PostController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 use App\Models\Pengguna;
@@ -26,6 +26,11 @@ Route::get('/pengguna' , 'PenggunaController@index');
 Route::get('/article', 'WebController@index');
 Route::get('/anggota', 'DikiController@index');
 Route::get('/article/show', 'WebController@show');
+Route::get('/post',[PostController::class,'index'])->name('data-index');
+Route::get('/post/create',[PostController::class,'create'])->name('post.create');
+Route::get('/post/update ',[PostController::class,'edit'])->name('post.edit');
+Route::post('/post/store',[PostController::class,'create'])->name('post.store');
+
 // Route::get('/post','PostController@index');
 // Route::post('/post/insert/',[PostController::class,'insert'])->name('insertPost');
 
@@ -34,7 +39,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::middleware(['auth'::class])->group(function () {
-    Route::resource('post', PostController::class); 
-});
- 
+// Route::middleware(['auth'::class])->group(function () {
+//     Route::resource('post', PostController::class);
+     
+// });
+// Route::get('/list', 'PostController@Postlist');

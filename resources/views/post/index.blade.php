@@ -7,6 +7,7 @@
     <title>Data Post | project1</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <link  href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 <body style="background: lightgray">
 
@@ -17,7 +18,7 @@
                     <div class="card-body">
                      
                         <a href="{{ route('post.create') }}" class="btn btn-md btn-success mb-3">TAMBAH POST</a>
-                        <table class="table table-bordered">
+                        <table class="table" id="table" style="width:100%">
                             <thead>
                                 <tr>
                                     <th scope="col">JUDUL</th>
@@ -27,74 +28,45 @@
                                     <th scope="col">AKSI</th>
                                   </tr>
                                 </thead>
-                                <tbody>
-                              @forelse ($post as $p)
-                              <div class="modal fade" id="edit{{$p->id}}">
-                                <div class="modal-dialog">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                  <h4 class="modal-title">Default Modal</h4>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                  <div class="modal-body">
-                                    <form action="{{ route('post.create', $p->id) }}" method="post">
-                                      {{ csrf_field() }}
-                                      <div class="form-group">
-                                        <label for="title" class="col-form-label">JUDUL</label>
-                                        <input type="text" class="form-control" name="title" id="title" value="{{$p->judul}}">
-                                      </div>
-                                      <div class="form-group">
-                                        <label>ISI</label>
-                                        <textarea name="body" class="form-control" rows="3">{{ $p->isi}}</textarea>
-                                      </div>
-                                    </div>
-                               
-                                    <div>
-                                    <td>{!! $p->slug!!}</td></br>
-                                    </div>
-                                    <div class="form-group">
-                                      <td class="text-center">
-                                         
-                                          <img src="{{ Storage::url('public/post/').$p->gambar }}" class="rounded" style="width: 150px">
-                                      </td>
-                                    </div>
-                                      <div class="form-group">
-                                      <td class="text-center">
-                                          <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('post.destroy', $p->id) }}" method="POST">
-                                              <a href="{{ route('post.edit', $p->id) }}" class="btn btn-sm btn-primary">EDIT</a>
-                                              @csrf
-                                              @method('DELETE')
-                                              <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-                                          </form>
-                                          </td>
-                                      </tr>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-       
-                                @empty
-                                    <div class="alert alert-danger">
-                                        Data Post belum Tersedia.
-                                    </div>
-                                @endforelse
-                                
-                              </tbody>
-                            </table>  
-                            {{ $post->links() }}
+                           </table> 
                       </div>
                   </div>
               </div>
             </div>
         </div>
     
-    
-
+        
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+        
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    
+        
+        <script>
+          $(function() {
+                $('#table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('data-index') }}",
+                columns: [
+                        //  { data: 'id', name: 'id' },
+                         { data: 'judul', name: 'judul' },
+                         { data: 'isi', name: 'isi' },
+                         { data: 'slug', name:'slug'},
+
+                        //  {data:'gambar', name:'gambar'},
+                        // { data: 'gambar', name:'gambar'},
+                        {data:'gambar',name:'gambar', render: function(data, type, full, meta) {
+                          return "<img src="+data+"/>"
+                        }},
+                         {data:'action',name:'action',orderable:false,searchable:false},
+                         
+                      ]
+             });
+          });
+          </script>
         <script>
             //message with toastr
        

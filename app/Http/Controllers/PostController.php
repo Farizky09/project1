@@ -7,15 +7,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $post = Post::latest()->paginate(10);
+        // $post = Post::with('user')->paginate(10);
         $user_id = Auth::id();
-        $post = Post::where('user_id','=',$user_id)->paginate(10);
-        return view('post.index', compact('post'));
+        $post = Post::where('user_id','=',$user_id)->get();
+        // return view('post.index', compact('post'));
+       if($request->ajax()){
+        return DataTables::of(Post::query()->where('user_id','=',$user_id))
+        ->addIndexColumn()
+        ->addColumn('action', function($row){
+
+               $btn = '<a href="javascript:void(0)" class="edit btn btn-info btn-sm">Detail</a> | ';
+               $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Update</a> | ';
+               $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Delete</a>';
+
+                return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+       }
+       return view('post.index');
     }
     public function create()
     {
