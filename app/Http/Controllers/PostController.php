@@ -15,16 +15,17 @@ class PostController extends Controller
     {
         // $post = Post::with('user')->paginate(10);
         $user_id = Auth::id();
-        $post = Post::where('user_id','=',$user_id)->get();
+
+        // $post = Post::where('user_id','=',$user_id)->get();
+        $post = Post::query()->where('user_id','=',$user_id);
         // return view('post.index', compact('post'));
        if($request->ajax()){
-        return DataTables::of(Post::query()->where('user_id','=',$user_id))
+        return DataTables::of($post)
         ->addIndexColumn()
-        ->addColumn('action', function($row){
+        ->addColumn('action', function($post){
 
-               $btn = '<a href="javascript:void(0)" class="edit btn btn-info btn-sm">Detail</a> | ';
-               $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">Update</a> | ';
-               $btn = $btn.'<a href="javascript:void(0)" class="edit btn btn-danger btn-sm">Delete</a>';
+               $btn ='<button id="update" data-id="'.$post->id.'" class="edit btn btn-primary btn-sm">Update</button> | ';
+               $btn = $btn."<a href=".route('delete',$post->id)." class='edit btn btn-danger btn-sm'>Delete</a>";
 
                 return $btn;
         })
@@ -36,6 +37,7 @@ class PostController extends Controller
     public function create()
     {
         return view('post.create');
+        // return 
     }
     public function store(Request $request) //simpan data post
     {
@@ -63,15 +65,15 @@ class PostController extends Controller
 
         if ($post) {
             //redirect dengan pesan sukses
-            return redirect()->route('post.index')->with(['success' => 'Data Berhasil Disimpan!']);
+            return redirect()->route('data-index')->with(['success' => 'Data Berhasil Disimpan!']);
         } else {
             //redirect dengan pesan error
-            return redirect()->route('post.index')->with(['error' => 'Data Gagal Disimpan!']);
+            return redirect()->route('data-index')->with(['error' => 'Data Gagal Disimpan!']);
         }
     }
     public function edit(Post $post) //untuk update data
     {
-        return view('post.edit', compact('post')); //untuk menampilkna form saja
+        return view('data-edit', compact('post')); //untuk menampilkna form saja
     }
     public function update(Request $request, post $post) //aksi untuk menyimpan perubahan data
     {
@@ -111,10 +113,10 @@ class PostController extends Controller
 
         if ($post) {
             //redirect dengan pesan sukses
-            return redirect()->route('post.index')->with(['success' => 'Data Berhasil Diupdate!']);
+            return redirect()->route('data-index')->with(['success' => 'Data Berhasil Diupdate!']);
         } else {
             //redirect dengan pesan error
-            return redirect()->route('post.index')->with(['error' => 'Data Gagal Diupdate!']);
+            return redirect()->route('data-index')->with(['error' => 'Data Gagal Diupdate!']);
         }
     }
 
@@ -127,10 +129,10 @@ class PostController extends Controller
 
         if ($post) {
             //redirect dengan pesan sukses
-            return redirect()->route('post.index')->with(['success' => 'Data Berhasil Dihapus!']);
+            return redirect()->route('data-index')->with(['success' => 'Data Berhasil Dihapus!']);
         } else {
             //redirect dengan pesan error
-            return redirect()->route('post.index')->with(['error' => 'Data Gagal Dihapus!']);
+            return redirect()->route('data-index')->with(['error' => 'Data Gagal Dihapus!']);
         }
     }
   

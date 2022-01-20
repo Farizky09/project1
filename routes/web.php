@@ -26,21 +26,22 @@ Route::get('/pengguna' , 'PenggunaController@index');
 Route::get('/article', 'WebController@index');
 Route::get('/anggota', 'DikiController@index');
 Route::get('/article/show', 'WebController@show');
-Route::get('/post',[PostController::class,'index'])->name('data-index');
-Route::get('/post/create',[PostController::class,'create'])->name('post.create');
-Route::get('/post/update ',[PostController::class,'edit'])->name('post.edit');
-Route::post('/post/store',[PostController::class,'create'])->name('post.store');
 
 // Route::get('/post','PostController@index');
 // Route::post('/post/insert/',[PostController::class,'insert'])->name('insertPost');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::middleware(['auth'::class])->group(function(){
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::middleware(['auth'::class])->group(function () {
+    Route::get('/post',[PostController::class,'index'])->name('data-index');
+    Route::get('post/insert',[PostController::class,'create'])->name('insert');
+    Route::get('post/delete/{id}',[PostController::class,'destroy'])->name('delete');
+    Route::post('post/data/insert',[PostController::class,'store'])->name('store');
+    Route::get('post/update',[PostController::class,'edit'])->name('update');
+});
 //     Route::resource('post', PostController::class);
      
-// });
 // Route::get('/list', 'PostController@Postlist');
