@@ -40,7 +40,7 @@ Route::middleware(['auth'::class])->group(function(){
     Route::get('post/insert',[PostController::class,'create'])->name('insert');
     Route::get('post/delete/{id}',[PostController::class,'destroy'])->name('delete');
     Route::post('post/data/insert',[PostController::class,'store'])->name('store');
-    Route::get('post/update',[PostController::class,'edit'])->name('update');
+    Route::get('post/update',[PostController::class,'edit'])->name('data-edit');
 });
 //     Route::resource('post', PostController::class);
      
