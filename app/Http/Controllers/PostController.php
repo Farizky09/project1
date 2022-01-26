@@ -24,12 +24,12 @@ class PostController extends Controller
         ->addIndexColumn()
         ->addColumn('action', function($post){
 
-               $btn ='<button id="update" data-id="'.$post->id.'" class="edit btn btn-primary btn-sm">Update</button> | ';
+               $btn ='<button id="update" data-id="'.$post->id.'" class="edit btn btn-primary btn-sm" data-toggle="modal" data-target="#updatemodal">Update</button> | ';
                $btn = $btn."<a href=".route('delete',$post->id)." class='edit btn btn-danger btn-sm'>Delete</a>";
 
                 return $btn;
         })
-        ->rawColumns(['action'])
+        ->rawColumns(['action', 'isi'])
         ->make(true);
        }
        return view('post.index');
