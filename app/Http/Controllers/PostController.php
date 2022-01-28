@@ -71,7 +71,7 @@ class PostController extends Controller
     }
     public function edit(Post $post) //untuk update data
     {
-        return view('data-edit', compact('post')); //untuk menampilkna form saja
+        return view('update', compact('post')); //untuk menampilkna form saja
     }
     public function update(Request $request, post $post) //aksi untuk menyimpan perubahan data
     {
@@ -84,11 +84,11 @@ class PostController extends Controller
         //get data post by ID
         // $post = post::findOrFail($post->id);
 
-        if ($request->file('image') == "") {
+        if ($request->has("image") == "") {
 
             $post->update([
                 'judul'     => $request->judul,
-                'isi'     => $request->isi,
+                'isi'     => $request->isi, 
                 'slug'     => Str::slug($request->judul),
             ]);
         } else {

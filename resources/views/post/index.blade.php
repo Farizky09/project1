@@ -117,7 +117,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('data-edit') }}" method="POST" id="updateform" enctype="multipart/form-data">
+                    <form action="" method="POST" id="updateform" enctype="multipart/form-data">
 
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
@@ -130,6 +130,7 @@
 
                             <!-- error message untuk judul -->
                             @error('judul')
+
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
@@ -151,7 +152,7 @@
                         <div class="form-group">
                             <label class="font-weight-bold">GAMBAR</label>
 
-                            <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="gambar">
+                            <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="image">
                             <!-- error message untuk title -->
                             @error('gambar')
                             <div class="alert alert-danger mt-2">
@@ -202,7 +203,7 @@
             // { data: 'gambar', name:'gambar'},
             {
                 data: 'gambar',
-                name: 'gambar',
+                name: 'image',
                 render: function(data, type, full, meta) {
                     return '<img src="{{url("")}}/storage/post/' + data + '" width="100px">'
                     // return "<img src= />"
@@ -231,10 +232,11 @@
             $('#id').val(data.id);
             $('#judul').val(data.judul); 
             $('#isi').val(data.isi); 
-            $('#slug').val(data.slug); 
+            $('#slug').val(data.slug);
+         $('#gambar').val(data.gambar); 
             // $('#gambar').val(data.gambar);
 
-            $('#updateform').attr('action', '{{ route("data-edit") }}' + data[0]); $('#updatemodal').modal('show');
+            $('#updateform').attr('action', '/post/' + data.id +'/update'); $('#updatemodal').modal('show');
         });
     });
 
