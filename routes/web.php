@@ -43,6 +43,7 @@ Route::middleware(['auth'::class])->group(function(){
     Route::put('post/{post}/update',[PostController::class,'update'])->name('update');
     
 });
+
 //     Route::resource('post', PostController::class);
      
 // Route::get('/list', 'PostController@Postlist');

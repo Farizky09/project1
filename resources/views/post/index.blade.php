@@ -216,6 +216,7 @@
                 searchable: false
             },
 
+            
         ]
     });
     $(document).ready(function() {

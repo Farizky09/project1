@@ -81,33 +81,53 @@ class PostController extends Controller
             'slug'     => 'nullable',
         ]);
 
+        try {
+            post::transaction(function() use($request, $post){
+    
+                $post->fill($request->except('image'));
+                if($request->hasFile('image')) {
+                    Storage::disk('public')->delete($request->oldImage);
+                    $image = $request->image->store('image', 'public');
+                }
+                // else{
+                //     $image = $request->oldImage;
+                //  } 
+                $post->image = $image;
+                $post->save();
+            });
+            return redirect()->route('data-index');
+        } catch (post $e) {
+            report($e);
+            return redirect()->back()->withErrors(['error' => 'Terjadi Error'])->withInput();
+        }
+
         //get data post by ID
         // $post = post::findOrFail($post->id);
 
-        if ($request->has("image") == "") {
+        // if ($request->has("image") == "") {
 
-            $post->update([
-                'judul'     => $request->judul,
-                'isi'     => $request->isi, 
-                'slug'     => Str::slug($request->judul),
-            ]);
-        } else {
+        //     $post->update([
+        //         'judul'     => $request->judul,
+        //         'isi'     => $request->isi, 
+        //         'slug'     => Str::slug($request->judul),
+        //     ]);
+        // } else {
 
-            //hapus old image
-            Storage::disk('local')->delete('public/post/' . $post->image);
+        //     //hapus old image
+        //     Storage::disk('local')->delete('public/post/' . $post->image);
 
-            //upload new image
-            $image = $request->file('image');
-            $image->storeAs('public/post', $image->hashName());
+        //     //upload new image
+        //     $image = $request->file('image');
+        //     $image->storeAs('public/post', $image->hashName());
 
-            $post->update([
-                'judul'     => $request->judul,
-                'isi'     => $request->isi,
-                'slug'     => Str::slug($request->judul),
-                'gambar'     => $image->hashName(),
+        //     $post->update([
+        //         'judul'     => $request->judul,
+        //         'isi'     => $request->isi,
+        //         'slug'     => Str::slug($request->judul),
+        //         'gambar'     => $image->hashName(),
 
-            ]);
-        }
+        //     ]);
+        
 
         if ($post) {
             //redirect dengan pesan sukses
@@ -117,6 +137,7 @@ class PostController extends Controller
             return redirect()->route('data-index')->with(['error' => 'Data Gagal Diupdate!']);
         }
     }
+
 
 
     public function destroy($id) //menghapus data post
