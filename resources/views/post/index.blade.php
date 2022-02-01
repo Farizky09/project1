@@ -106,6 +106,8 @@
             </div>
         </div>
     </div>
+
+   
     <!-- Modal edit -->
     <div class="modal fade" id="updatemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -152,7 +154,7 @@
                         <div class="form-group">
                             <label class="font-weight-bold">GAMBAR</label>
 
-                            <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="image">
+                            <input type="file" class="form-control @error('gambar') is-invalid @enderror" id="gambar" name="gambar">
                             <!-- error message untuk title -->
                             @error('gambar')
                             <div class="alert alert-danger mt-2">
@@ -184,8 +186,9 @@
         processing: true,
         serverSide: true,
         ajax: "{{ route('data-index') }}",
-        columns: [
+        columns: [ 
             //  { data: 'id', name: 'id' },
+            
             {
                 data: 'judul',
                 name: 'judul'
@@ -216,7 +219,7 @@
                 searchable: false
             },
 
-            
+
         ]
     });
     $(document).ready(function() {
@@ -234,7 +237,7 @@
             $('#judul').val(data.judul); 
             $('#isi').val(data.isi); 
             $('#slug').val(data.slug);
-         $('#gambar').val(data.gambar); 
+        // $('#gambar').val(data.gambar); 
             // $('#gambar').val(data.gambar);
 
             $('#updateform').attr('action', '/post/' + data.id +'/update'); $('#updatemodal').modal('show');

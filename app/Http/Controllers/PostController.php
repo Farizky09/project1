@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -24,7 +25,7 @@ class PostController extends Controller
         ->addIndexColumn()
         ->addColumn('action', function($post){
             $btn ='<button id="update" data-id="'.$post->id.'" class="edit btn btn-primary btn-sm" data-toggle="modal" data-target="#updatemodal">Update</button> | ';
-            $btn = $btn."<a href=".route('delete',$post->id)." class='edit btn btn-danger btn-sm'>Delete</a>";
+            $btn = $btn."<a href=".route('delete',$post->id)." class=' btn btn-danger btn-sm'>Delete</a>";
                 return $btn;
         })
         ->rawColumns(['action', 'isi'])
@@ -39,11 +40,12 @@ class PostController extends Controller
     }
     public function store(Request $request) //simpan data post
     {
+       // dd($request->all()); tampilin data
         $this->validate($request, [ //untuk validate form
             'judul'     => 'required',
             'isi'     => 'required',
             'slug'     => 'nullable',
-            'gambar'     => 'required|image|mimes:png,jpg,jpeg',
+            'gambar'     => 'required|mimes:png,jpg,jpeg',
 
         ]);
 
@@ -82,20 +84,28 @@ class PostController extends Controller
         ]);
 
         try {
-            post::transaction(function() use($request, $post){
+            DB::transaction(function() use($request, $post){
     
-                $post->fill($request->except('image'));
-                if($request->hasFile('image')) {
+                $post->fill($request->except('gambar'));
+                if($request->hasFile('gambar')) {
                     Storage::disk('public')->delete($request->oldImage);
-                    $image = $request->image->store('image', 'public');
+                  //  $image = $request->image->store('gambar', 'public');
+                  $image = $request->file('gambar');
+                  $image->storeAs('public/post', $image->hashName());
+                  $post->gambar = $image->hashName();
                 }
                 // else{
                 //     $image = $request->oldImage;
                 //  } 
-                $post->image = $image;
+                // $post->image = $image;
                 $post->save();
             });
-            return redirect()->route('data-index');
+            if ($post) {
+            return redirect()->route('data-index')->with(['success' => 'Data Berhasil Diupdate!']);
+        } else {
+            //redirect dengan pesan error
+            return redirect()->route('data-index')->with(['error' => 'Data Gagal Diupdate!']);
+        }
         } catch (post $e) {
             report($e);
             return redirect()->back()->withErrors(['error' => 'Terjadi Error'])->withInput();
