@@ -206,6 +206,7 @@
             // { data: 'gambar', name:'gambar'},
             {
                 data: 'gambar',
+                searchable: false,
                 name: 'image',
                 render: function(data, type, full, meta) {
                     return '<img src="{{url("")}}/storage/post/' + data + '" width="100px">'
@@ -216,7 +217,7 @@
                 data: 'action',
                 name: 'action',
                 orderable: false,
-                searchable: false
+               
             },
 
 
@@ -243,7 +244,6 @@
             $('#updateform').attr('action', '/post/' + data.id +'/update'); $('#updatemodal').modal('show');
         });
     });
-
 
 
 

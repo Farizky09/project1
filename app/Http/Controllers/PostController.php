@@ -82,6 +82,7 @@ class PostController extends Controller
             'isi'     => 'required',
             'slug'     => 'nullable',
         ]);
+        
 
         try {
             DB::transaction(function() use($request, $post){
@@ -94,6 +95,8 @@ class PostController extends Controller
                   $image->storeAs('public/post', $image->hashName());
                   $post->gambar = $image->hashName();
                 }
+                $post->slug = Str::slug($request->judul);
+                
                 // else{
                 //     $image = $request->oldImage;
                 //  } 
