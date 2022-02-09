@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Mail\Maill;
+use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
 
 class PostController extends Controller
 {
@@ -62,6 +66,19 @@ class PostController extends Controller
             'gambar'     => $image->hashName(),
 
         ]);
+      
+    Mail::to(auth()->user('web'))->send(new Maill($post));
+
+    return redirect()->route('emails.postCreate');
+
+       //
+        
+        // Mail::send('emails.postCreated',$post->toArray(),
+        // function ($message){
+        //     $message->to('ahmadfarizky26082004@gmail.com', 'Code Online')
+        //     ->subject('Post Created Subject');
+        // });
+        // session()->flash('message',$post['judul'].'sukses disimpan');
 
         if ($post) {
             //redirect dengan pesan sukses
@@ -96,7 +113,7 @@ class PostController extends Controller
                   $post->gambar = $image->hashName();
                 }
                 $post->slug = Str::slug($request->judul);
-                
+
                 // else{
                 //     $image = $request->oldImage;
                 //  } 
