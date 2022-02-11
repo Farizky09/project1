@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageCreated;
 use App\Models\Post;
-use App\Mail\Maill;
+use App\Mail\Mailky;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -65,13 +66,15 @@ class PostController extends Controller
             'slug'     => Str::slug($request->judul),
             'gambar'     => $image->hashName(),
 
-        ]);
-      
-    Mail::to(auth()->user('web'))->send(new Maill($post));
+        ]); 
+        Mail::to(auth()->user('web'))->send(new Mailky($post)); //send to mail (mailtrap) 
+    
+    return redirect()->route('data-index');
 
-    return redirect()->route('emails.postCreate');
+    MessageCreated::dispatch($post);
+    // return redirect()->route('data-index');
 
-       //
+    //    //
         
         // Mail::send('emails.postCreated',$post->toArray(),
         // function ($message){
@@ -112,7 +115,7 @@ class PostController extends Controller
                   $image->storeAs('public/post', $image->hashName());
                   $post->gambar = $image->hashName();
                 }
-                $post->slug = Str::slug($request->judul);
+                $post->slug = Str::slug($request->judul); //update slug
 
                 // else{
                 //     $image = $request->oldImage;

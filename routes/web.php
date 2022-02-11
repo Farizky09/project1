@@ -1,4 +1,6 @@
 <?php
+
+use App\Events\MessageCreated;
 use App\Http\Controllers\PostController;
 use App\Http\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
@@ -6,6 +8,7 @@ use App\Models\Pengguna;
 use App\Models\Telepon;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events;
 
 
 /*
@@ -41,7 +44,10 @@ Route::middleware(['auth'::class])->group(function(){
     Route::get('post/delete/{id}',[PostController::class,'destroy'])->name('delete');
     Route::post('post/data/insert',[PostController::class,'store'])->name('store');
     Route::put('post/{post}/update',[PostController::class,'update'])->name('update');
-    
+
+    // MessageCreated::dispatch($post);
+    // event (event: new 'messages');
+
 });
 
 //     Route::resource('post', PostController::class);
