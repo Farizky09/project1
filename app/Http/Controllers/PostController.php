@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Events\MessageCreated;
+//use App\Listeners\MessageCreatedListener;
 use App\Models\Post;
-use App\Mail\Mailky;
+// use App\Mail\Mailky;
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -67,11 +68,15 @@ class PostController extends Controller
             'gambar'     => $image->hashName(),
 
         ]); 
-        Mail::to(auth()->user('web'))->send(new Mailky($post)); //send to mail (mailtrap) 
+    //     Mail::to(auth()->user('web'))->send(new Mailky($post)); //send to mail (mailtrap) 
     
-    return redirect()->route('data-index');
+   
 
-    MessageCreated::dispatch($post);
+    // MessageCreated::dispatch($post);
+
+    MessageCreated::dispatch(auth()->user('web'), $post);    
+
+    return redirect()->route('data-index');
     // return redirect()->route('data-index');
 
     //    //
