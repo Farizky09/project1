@@ -26,9 +26,9 @@ class MessageCreatedListener
      * @param  object  $event
      * @return void
      */
-    public function handle($message)
+    public function handle($event)
     {
-        Mail::to($message->post)->send(new Mailky($message->post));
+        Mail::to($event->user)->send(new Mailky($event->post));
     }
 }
 // Mail::to($event->user)->send(new CreatedExample($event->example));

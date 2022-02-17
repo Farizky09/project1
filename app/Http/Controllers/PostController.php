@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Events\MessageCreated;
-//use App\Listeners\MessageCreatedListener;
+
 use App\Models\Post;
-// use App\Mail\Mailky;
+
 use GuzzleHttp\Promise\Create;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
